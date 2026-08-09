@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Rafael — Preview de Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0A0F;
+    --bg-alt: #0D0E14;
+    --card: #14151D;
+    --card-hover: #191A24;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.16);
+    --text-primary: #F2F3F7;
+    --text-secondary: #9599AA;
+    --text-muted: #5D6070;
+    --accent: #6C8CFF;
+    --accent-2: #8B6CFF;
+    --mint: #45E0A8;
+    --radius: 14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+
+  /* subtle ambient glow, discrete gradient */
+  body::before{
+    content:'';
+    position:fixed; top:-20%; right:-10%;
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(108,140,255,0.12) 0%, transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+  body::after{
+    content:'';
+    position:fixed; bottom:-20%; left:-10%;
+    width:500px; height:500px;
+    background:radial-gradient(circle, rgba(139,108,255,0.10) 0%, transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 56px;
+    background:rgba(10,10,15,0.7);
+    backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px; font-weight:500;
+    color:var(--text-primary);
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);}
+  .nav-links{display:flex; gap:36px; list-style:none;}
+  .nav-links a{
+    color:var(--text-secondary); text-decoration:none; font-size:14px;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--text-primary);}
+  .nav-cta{
+    font-size:13px; font-weight:500; color:var(--bg);
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    padding:10px 20px; border-radius:8px; border:none; cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(108,140,255,0.25);}
+
+  .hero{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;
+    align-items:center;
+    padding:100px 56px 120px;
+    min-height:80vh;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    color:var(--mint); margin-bottom:24px;
+    background:rgba(69,224,168,0.08); border:1px solid rgba(69,224,168,0.2);
+    padding:6px 14px; border-radius:20px; width:fit-content;
+  }
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600; font-size:22px; color:var(--text-secondary);
+    margin-bottom:10px;
+  }
+  .hero h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700; font-size:52px; line-height:1.1;
+    letter-spacing:-0.02em;
+    margin-bottom:22px;
+  }
+  .hero h2 .grad{
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p{
+    font-size:17px; color:var(--text-secondary); line-height:1.6;
+    max-width:480px; margin-bottom:36px;
+  }
+  .hero-buttons{display:flex; gap:14px; margin-bottom:28px;}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    color:#fff; border:none; padding:14px 26px; border-radius:10px;
+    font-size:14px; font-weight:500; cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(108,140,255,0.3);}
+  .btn-secondary{
+    background:transparent; color:var(--text-primary);
+    border:1px solid var(--border-strong); padding:14px 26px; border-radius:10px;
+    font-size:14px; font-weight:500; cursor:pointer;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .btn-secondary:hover{background:var(--card); border-color:var(--accent);}
+  .availability{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; color:var(--text-muted);
+  }
+  .availability .pulse{
+    width:8px;height:8px;border-radius:50%;background:var(--mint);
+    box-shadow:0 0 0 0 rgba(69,224,168,0.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(69,224,168,0.5);}
+    70%{box-shadow:0 0 0 8px rgba(69,224,168,0);}
+    100%{box-shadow:0 0 0 0 rgba(69,224,168,0);}
+  }
+
+  /* signature element: terminal */
+  .terminal{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 16px; background:var(--bg-alt);
+    border-bottom:1px solid var(--border);
+  }
+  .terminal-bar span{width:11px;height:11px;border-radius:50%;}
+  .terminal-bar .r{background:#FF5F57;} .terminal-bar .y{background:#FEBC2E;} .terminal-bar .g{background:#28C840;}
+  .terminal-title{
+    margin-left:8px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted);
+  }
+  .terminal-body{
+    padding:24px; font-family:'JetBrains Mono',monospace; font-size:13.5px; line-height:1.9;
+    min-height:260px;
+  }
+  .terminal-body .prompt{color:var(--mint);}
+  .terminal-body .cmd{color:var(--text-primary);}
+  .terminal-body .out{color:var(--text-secondary); display:block; margin:2px 0 10px 0;}
+  .terminal-body .key{color:var(--accent-2);}
+  .cursor{
+    display:inline-block; width:8px; height:15px; background:var(--mint);
+    margin-left:2px; animation:blink 1s step-end infinite; vertical-align:middle;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .float-badge{
+    position:absolute; background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:10px 14px; font-size:12px; font-family:'JetBrains Mono',monospace;
+    color:var(--text-secondary); backdrop-filter:blur(10px);
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+  section{position:relative; z-index:1; padding:80px 56px;}
+  .section-eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent);
+    text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;
+  }
+  .section-title{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:32px;
+    margin-bottom:40px;
+  }
+  .about-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:start;}
+  .about-text{color:var(--text-secondary); font-size:15.5px; line-height:1.85;}
+  .about-cards{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .about-card{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px; transition:border-color .2s ease, transform .2s ease;
+  }
+  .about-card:hover{border-color:var(--border-strong); transform:translateY(-3px);}
+  .about-card .ic{font-size:20px; margin-bottom:10px; display:block;}
+  .about-card h4{font-size:14.5px; font-weight:600; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;}
+  .about-card p{font-size:13px; color:var(--text-muted); line-height:1.5;}
+
+  .skills-badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+  .badge{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px;
+    background:var(--card); border:1px solid var(--border); color:var(--text-secondary);
+    padding:8px 14px; border-radius:8px;
+  }
+
+  .note{
+    text-align:center; padding:40px 20px; color:var(--text-muted); font-size:13px;
+    border-top:1px solid var(--border); font-family:'JetBrains Mono',monospace;
+  }
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr; padding:60px 24px;}
+    .about-grid{grid-template-columns:1fr;}
+    nav{padding:16px 20px;}
+    .nav-links{display:none;}
+    .hero h2{font-size:36px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="dot"></span>rafael.dev</div>
+  <ul class="nav-links">
+    <li><a href="#">Início</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="#">Habilidades</a></li>
+    <li><a href="#">Projetos</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+  <button class="nav-cta">Entre em contato</button>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">● disponível para novas oportunidades</div>
+    <h1>Olá, eu sou Rafael 👋</h1>
+    <h2>Desenvolvedor de <span class="grad">Software</span> & Analista de TI</h2>
+    <p>Transformando ideias em soluções digitais através de tecnologia, programação e aprendizado contínuo.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary">Ver meus projetos</button>
+      <button class="btn-secondary">Entre em contato</button>
+    </div>
+    <div class="availability"><span class="pulse"></span>Disponível para estágio, desenvolvimento e tecnologia</div>
+  </div>
+
+  <div style="position:relative;">
+    <div class="float-badge" style="top:-18px; right:20px;">git commit -m "evoluindo"</div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+        <span class="terminal-title">rafael@dev ~ </span>
+      </div>
+      <div class="terminal-body">
+<span class="prompt">$</span> <span class="cmd">whoami</span>
+<span class="out">rafael — dev & estudante de TI</span>
+<span class="prompt">$</span> <span class="cmd">cat</span> <span class="key">habilidades.json</span>
+<span class="out">["Java","React","SQL","TypeScript"]</span>
+<span class="prompt">$</span> <span class="cmd">status</span> --atual
+<span class="out">aprendendo, construindo, evoluindo</span>
+<span class="prompt">$</span> <span class="cursor"></span>
+      </div>
+    </div>
+    <div class="float-badge" style="bottom:-16px; left:10px;">build passing ✓</div>
+  </div>
+</section>
+
+<section>
+  <div class="section-eyebrow">Sobre mim</div>
+  <div class="about-grid">
+    <p class="about-text">
+      Sou estudante da área de Tecnologia da Informação, apaixonado por programação e desenvolvimento de soluções.
+      Tenho interesse em desenvolvimento web, sistemas, bancos de dados, testes de software e engenharia de software.
+      Estou constantemente buscando aprimorar meus conhecimentos por meio de projetos práticos, estudos e novos desafios.
+    </p>
+    <div class="about-cards">
+      <div class="about-card"><span class="ic">🎯</span><h4>Objetivo</h4><p>Transformar conhecimento técnico em soluções de valor real.</p></div>
+      <div class="about-card"><span class="ic">🚀</span><h4>Aprendizado contínuo</h4><p>Estudo constante através de projetos práticos.</p></div>
+      <div class="about-card"><span class="ic">💻</span><h4>Tecnologia</h4><p>Interesse em desenvolvimento web, sistemas e dados.</p></div>
+      <div class="about-card"><span class="ic">🧠</span><h4>Resolução de problemas</h4><p>Foco em qualidade, testes e engenharia de software.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-eyebrow">Habilidades</div>
+  <div class="section-title">Stack e ferramentas</div>
+  <div class="skills-badges">
+    <span class="badge">Java</span><span class="badge">PHP</span><span class="badge">Python</span>
+    <span class="badge">C</span><span class="badge">JavaScript</span><span class="badge">TypeScript</span>
+    <span class="badge">SQL</span><span class="badge">React</span><span class="badge">MySQL</span>
+    <span class="badge">Git</span><span class="badge">Scrum</span><span class="badge">APIs REST</span>
+  </div>
+</section>
+
+<div class="note">preview de design — navbar · hero · sobre · habilidades — restante das seções segue o mesmo sistema visual</div>
+
+</body>
+</html>
